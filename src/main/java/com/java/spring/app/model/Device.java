@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "device", schema = "public")
+@Table(name = "devices")
 public class Device {
 
     @Id

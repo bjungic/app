@@ -1,12 +1,14 @@
 package com.java.spring.app.model;
 
+import com.java.spring.app.security.Role;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "user", schema = "public")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -15,6 +17,10 @@ public class User {
 
     String username;
     String password;
+
+    @ManyToMany
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role"))
+    Set<Role> roles = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "device_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "device_id"))
@@ -60,11 +66,11 @@ public class User {
         this.devices = devices;
     }
 
-    public void removeDevice(Device device){
+    public void removeDevice(Device device) {
         devices.remove(device);
     }
 
-    public void removeAllDevices(){
+    public void removeAllDevices() {
         devices.removeAll(getDevices());
     }
 
