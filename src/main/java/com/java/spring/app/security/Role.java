@@ -13,7 +13,7 @@ public class Role {
     Long id;
 
     @Column(unique = true)
-    private String name = "ADMIN";
+    private String name;
 
     @ManyToMany(mappedBy = "roles")
     private List<User> users;

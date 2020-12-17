@@ -34,25 +34,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(usersDetailsServiceImplementation);
     }
 
-    /*
-
-    //    JDBC
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery("select username, password from users where username = ?")
-                .authoritiesByUsernameQuery("select username, name as role from users u left join user_roles ur on ur.user_id=u.id left join roles r on ur.role=r.id where username = ?");
-    }
-*/
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
                 .authorizeRequests()
-                .antMatchers("/d").hasAuthority("USER")
+                .antMatchers("/d").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/**").hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
