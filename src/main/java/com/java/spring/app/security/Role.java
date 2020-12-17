@@ -13,7 +13,7 @@ public class Role {
     Long id;
 
     @Column(unique = true)
-    private String name;
+    private String name = "ADMIN";
 
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
@@ -32,4 +32,12 @@ public class Role {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "\"" + name + "\"";
+    }
+
+
 }
+

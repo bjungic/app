@@ -18,11 +18,11 @@ public class User {
     String username;
     String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role"))
     Set<Role> roles = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "device_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "device_id"))
     Set<Device> devices = new HashSet<>();
 
@@ -32,6 +32,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -74,14 +82,16 @@ public class User {
         devices.removeAll(getDevices());
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "\"username\": \"" + username + "\"" +
-                ", \"password\": \"" + password + "\"" +
-                ", \"devices\": " + devices + "" +
-                "}";
-    }
+//    @Override
+//    public String toString() {
+//        return "{" +
+//                "\"username\": \"" + username + "\"" +
+//                ", \"password\": \"" + password + "\"" +
+//                ", \"roles\": " + roles +
+//                ", \"devices\": " + devices + "" +
+//                "}";
+//    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -95,5 +105,16 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(username, password);
+    }
+
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"username\": \"" + username + "\"" +
+                ", \"password\": \"" + password + "\"" +
+                ", \"roles\": " + roles +
+                ", \"devices\": " + devices +
+                "}";
     }
 }

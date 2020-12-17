@@ -24,7 +24,18 @@ public class RoleService {
             }
         }
     }
-    public Iterable<Role> getAllRoles(){
+
+    public Role getRoleByName(String name) {
+        Iterable<Role> result = roleRepository.findAll();
+        Iterator iter = result.iterator();
+        while (iter.hasNext()) {
+            Role r = (Role) iter.next();
+            if (name.equals(r.getName())) return r;
+        }
+        return null;
+    }
+
+    public Iterable<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 }

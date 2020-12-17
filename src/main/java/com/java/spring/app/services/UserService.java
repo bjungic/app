@@ -2,28 +2,28 @@ package com.java.spring.app.services;
 
 import com.java.spring.app.model.Device;
 import com.java.spring.app.model.User;
+import com.java.spring.app.security.Role;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService {
 
     private final DeviceService deviceService;
     private final UserRepository userRepository;
+    private final RoleService roleService;
 
-    public UserService(DeviceService deviceService, UserRepository userRepository) {
+    public UserService(DeviceService deviceService, UserRepository userRepository, RoleService roleService) {
         this.deviceService = deviceService;
         this.userRepository = userRepository;
+        this.roleService = roleService;
     }
 
     public void addUserFromDevice(User user, UUID uuid) {
         Optional<Device> dev = deviceService.getDevice(uuid);
         if (getUser(user.getUsername()) == null) {
             user.getDevices().add(dev.get());
-            System.out.println(user);
             userRepository.save(user);
         } else {
             User u = getUser(user.getUsername());
@@ -34,8 +34,25 @@ public class UserService {
 
     public void addUser(User user) {
         if (getUser(user.getUsername()) == null) {
+            Set<Role> roles = new HashSet<>();
+            for (Role r : user.getRoles()) {
+                if (roleService.getRoleByName(r.getName().toUpperCase()) != null)
+                    roles.add(roleService.getRoleByName(r.getName().toUpperCase()));
+                else {
+                    if (roles.isEmpty()) {
+                        System.out.println("Unknown ROLE: " + r.getName() + ". Set it to \"USER\"");
+                        if ((roleService.getRoleByName("USER") != null)) {
+                            roles.add(roleService.getRoleByName("USER"));
+                        } else {
+                            roles.add(new Role("USER"));
+                        }
+                    }
+                }
+            }
+            user.setRoles(roles);
             userRepository.save(user);
         }
+        System.out.println("Dodan user: " + user.getUsername());
     }
 
     public void deleteUser(Long id) {
@@ -51,6 +68,7 @@ public class UserService {
                 return u;
             }
         }
+        System.out.println(java.time.LocalDateTime.now() + "   Ne postoji user: " + username);
         return null;
     }
 
@@ -78,8 +96,8 @@ public class UserService {
             User u = (User) iter.next();
             if (user.getUsername().equals(u.getUsername())) {
                 user.setId(u.getId());
-                for (Device device : deviceService.getAllDevices()){
-                    if (device.getUuid().equals(uuid)){
+                for (Device device : deviceService.getAllDevices()) {
+                    if (device.getUuid().equals(uuid)) {
                         u.getDevices().add(device);
                     }
                 }
@@ -110,7 +128,7 @@ public class UserService {
         }
     }
 
-    public void removeAllDevices(User user){
+    public void removeAllDevices(User user) {
         user.getDevices().removeAll(user.getDevices());
     }
 }

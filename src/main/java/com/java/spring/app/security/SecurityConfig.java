@@ -1,5 +1,6 @@
 package com.java.spring.app.security;
 
+import com.java.spring.app.services.UsersDetailsServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -24,6 +25,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+    UsersDetailsServiceImplementation usersDetailsServiceImplementation;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(usersDetailsServiceImplementation);
+    }
+
+    /*
+
     //    JDBC
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -33,25 +45,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usersByUsernameQuery("select username, password from users where username = ?")
                 .authoritiesByUsernameQuery("select username, name as role from users u left join user_roles ur on ur.user_id=u.id left join roles r on ur.role=r.id where username = ?");
     }
+*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
                 .authorizeRequests()
-                .antMatchers("/").hasRole("ADMIN")
-
+                .antMatchers("/d").hasAuthority("USER")
+                .antMatchers("/**").hasAuthority("ADMIN")
+                .anyRequest()
+                .authenticated()
                 .and()
                 .httpBasic();
-
-       /* //pusta sve
-        http
-                .csrf()
-                .disable()
-                .authorizeRequests()
-                .anyRequest()
-                .anonymous()
-                .and()
-                .httpBasic();*/
+//        //propusta sve
+//        http
+//                .csrf()
+//                .disable()
+//                .authorizeRequests()
+//                .anyRequest()
+//                .anonymous()
+//                .and()
+//                .httpBasic();
     }
 }
