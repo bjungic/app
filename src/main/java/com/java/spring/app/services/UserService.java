@@ -2,6 +2,7 @@ package com.java.spring.app.services;
 
 import com.java.spring.app.model.Device;
 import com.java.spring.app.model.User;
+import com.java.spring.app.security.PasswordConfig;
 import com.java.spring.app.security.Role;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +11,14 @@ import java.util.*;
 @Service
 public class UserService {
 
+    private final PasswordConfig passwordConfig;
+
     private final DeviceService deviceService;
     private final UserRepository userRepository;
     private final RoleService roleService;
 
-    public UserService(DeviceService deviceService, UserRepository userRepository, RoleService roleService) {
+    public UserService(PasswordConfig passwordConfig, DeviceService deviceService, UserRepository userRepository, RoleService roleService) {
+        this.passwordConfig = passwordConfig;
         this.deviceService = deviceService;
         this.userRepository = userRepository;
         this.roleService = roleService;
@@ -34,6 +38,7 @@ public class UserService {
 
     public void addUser(User user) {
         if (getUser(user.getUsername()) == null) {
+//            user.setPassword(passwordConfig.passwordEncoder().encode(user.getPassword()));
             Set<Role> roles = new HashSet<>();
             for (Role r : user.getRoles()) {
                 if (roleService.getRoleByName(r.getName().toUpperCase()) != null)

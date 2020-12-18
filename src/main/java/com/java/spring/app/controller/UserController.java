@@ -4,6 +4,7 @@ import com.java.spring.app.model.User;
 import com.java.spring.app.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 @RequestMapping("u")
@@ -17,7 +18,8 @@ public class UserController {
     }
 
     @GetMapping
-    private String getUsers() {
+    private String getUsers(HttpServletRequest httpRequest) {
+        System.out.println(java.time.LocalDateTime.now() + "     IP: " + httpRequest.getRemoteAddr());
         return userService.getAllUsers().toString();
     }
 
