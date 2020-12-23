@@ -8,7 +8,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
 
-public class IPConfig extends GenericFilterBean {
+public class IPFilter extends GenericFilterBean {
 
 
     @Override
