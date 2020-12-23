@@ -1,0 +1,327 @@
+{
+	"info": {
+		"_postman_id": "5a49e344-dd91-47af-884c-2b24a8bd05e3",
+		"name": "app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add user (username, password in body)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"iivic\",\r\n    \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/u",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"u"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add user from device (uuid in url)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"mmaric\",\r\n    \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/u/834652b7-b3c6-4ec4-be4b-ea3c0a922216",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"u",
+						"834652b7-b3c6-4ec4-be4b-ea3c0a922216"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/u",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"u"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user by username",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/u/bjungic",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"u",
+						"bjungic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user (change password)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"bjungic\",\r\n    \"password\": \"qwert\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/u",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"u"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user (connect to device)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"aantolic\",\r\n    \"password\": \"qwert\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/u/834652b7-b3c6-4ec4-be4b-ea3c0a922216",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"u",
+						"834652b7-b3c6-4ec4-be4b-ea3c0a922216"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user by username",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/u/bjungic",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"u",
+						"bjungic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add device (uuid, model in body)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uuid\": \"834652b7-b3c6-4ec4-be4b-ea3c0a922216\",\r\n    \"model\": \"sm-j530f\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all devices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get device by uuid",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/d/fce2e9b8-5e80-481c-8830-ffd45221890c",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"d",
+						"fce2e9b8-5e80-481c-8830-ffd45221890c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update device (uuid, model from body)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uuid\": \"d8be365b-66bc-4e9a-8c0c-5279d35fe505\",\r\n    \"model\": \"sm-s211\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update device (connect to user)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uuid\": \"d8be365b-66bc-4e9a-8c0c-5279d35fe505\",\r\n    \"model\": \"sm-s211\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/d/mmikic",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"d",
+						"mmikic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete device by uuid",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/d/fce2e9b8-5e80-481c-8830-ffd45221890c",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"d",
+						"fce2e9b8-5e80-481c-8830-ffd45221890c"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

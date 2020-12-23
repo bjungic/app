@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class JWTAuthFilter extends OncePerRequestFilter {
 
-    UsersDetailsServiceImplementation udsi;
+    UsersDetailsServiceImplementation usersDetailsServiceImp;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -50,7 +50,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         }
         // Once we get the token validate it.
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetailsImplementation userDetails = (UserDetailsImplementation) udsi.loadUserByUsername(username);
+            UserDetailsImplementation userDetails = (UserDetailsImplementation) usersDetailsServiceImp.loadUserByUsername(username);
             // if token is valid configure Spring Security to manually set
             // authentication
             if (token.validateToken(jwtToken, userDetails)) {

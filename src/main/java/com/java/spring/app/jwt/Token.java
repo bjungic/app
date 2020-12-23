@@ -18,6 +18,8 @@ public class Token implements Serializable {
     private String validity;
     @Value("${jwt.secret}")
     private String secret;
+    @Value("${jwt.signatureAlgorithm}")
+    SignatureAlgorithm signatureAlgorithm;
 
     public Long JWT_validity = 1000 * 60 * Long.parseLong(validity);
 
@@ -52,7 +54,7 @@ public class Token implements Serializable {
 
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_validity))
-                .signWith(SignatureAlgorithm.HS512, secret).compact();
+                .signWith(signatureAlgorithm, secret).compact();
     }
 
     public Boolean validateToken(String token, UserDetailsImplementation userDetails) {
