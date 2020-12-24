@@ -1,44 +1,46 @@
 package com.java.spring.app.security;
 
 import com.java.spring.app.filters.IPFilter;
+import com.java.spring.app.filters.JWTAuthFilter;
+import com.java.spring.app.filters.JWTVerifyFilter;
+import com.java.spring.app.jwt.TokenConfig;
 import com.java.spring.app.services.UsersDetailsServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity(debug = false)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    HttpServletRequest httpServletRequest;
-
-    @Autowired
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    DataSource dataSource;
+    private final DataSource dataSource;
+
+    private final UsersDetailsServiceImplementation usersDetailsServiceImplementation;
+
+    private final TokenConfig tokenConfig;
 
     @Autowired
-    UsersDetailsServiceImplementation usersDetailsServiceImplementation;
-
-    public SecurityConfig(PasswordEncoder passwordEncoder) {
+    public SecurityConfig(PasswordEncoder passwordEncoder, DataSource dataSource, UsersDetailsServiceImplementation usersDetailsServiceImplementation, TokenConfig tokenConfig) {
         this.passwordEncoder = passwordEncoder;
+        this.dataSource = dataSource;
+        this.usersDetailsServiceImplementation = usersDetailsServiceImplementation;
+        this.tokenConfig = tokenConfig;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(usersDetailsServiceImplementation);
-        System.out.println("AuthManager");
     }
 
     @Override
@@ -46,27 +48,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new JWTAuthFilter(authenticationManager(), tokenConfig))
+                .addFilterAfter(new JWTVerifyFilter(tokenConfig), JWTAuthFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/", "login").permitAll()
                 .antMatchers("/d").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/**").hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
                 .addFilterAfter(new IPFilter(), SecurityContextPersistenceFilter.class)
-                .httpBasic()
-//                .and()
-//                .addFilterBefore(new JWTAuthFilter(), SecurityContextPersistenceFilter.class)
+//                .httpBasic()
         ;
-
-//        //propusta sve
-//        http
-//                .csrf()
-//                .disable()
-//                .authorizeRequests()
-//                .anyRequest()
-//                .anonymous()
-//                .and()
-//                .httpBasic();
     }
 }
