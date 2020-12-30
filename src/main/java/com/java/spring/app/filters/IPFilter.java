@@ -17,12 +17,4 @@ public class IPFilter extends OncePerRequestFilter {
         servletResponse.addHeader("Content-Type", "application/JSON");
         filterChain.doFilter(servletRequest, servletResponse);
     }
-
-//    @Override
-//    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-//        System.out.println("IP:   " + servletRequest.getRemoteAddr());
-//        System.out.println("############################################################");
-//        servletResponse.add
-//        filterChain.doFilter(servletRequest, servletResponse);
-//    }
 }
