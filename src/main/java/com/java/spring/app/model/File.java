@@ -16,6 +16,7 @@ public class File {
 
     public File() {
     }
+
     public File(String fileName, String contentType, byte[] fileData) {
         this.fileName = fileName;
         this.contentType = contentType;
@@ -48,5 +49,13 @@ public class File {
 
     public Long getId() {
         return this.id;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"fileName\": \"" + fileName + "\"" +
+                ", \"contentType\": \"" + contentType + "\"" +
+                "}";
     }
 }

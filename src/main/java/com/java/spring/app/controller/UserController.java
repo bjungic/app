@@ -40,10 +40,8 @@ public class UserController {
 
     @PostMapping
     private void setUser(@RequestBody User user) {
-        System.out.println("Add user contorller!");
         try {
             userService.addUser(user);
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
