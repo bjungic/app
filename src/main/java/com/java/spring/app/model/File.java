@@ -45,4 +45,8 @@ public class File {
     public void setFileData(byte[] fileData) {
         this.fileData = fileData;
     }
+
+    public Long getId() {
+        return this.id;
+    }
 }

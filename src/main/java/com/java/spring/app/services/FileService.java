@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Optional;
 
 @Service
@@ -23,11 +24,19 @@ public class FileService {
         fileRepository.save(file);
     }
 
-    public Optional<File> getFileByID (Long id){
-        return fileRepository.findById(id);
+    public Optional<File> getFileByID(String fileName) {
+        Iterable<File> result = fileRepository.findAll();
+        Iterator iter = result.iterator();
+        while (iter.hasNext()) {
+            File f = (File) iter.next();
+            if (f.getFileName().equals(fileName)) {
+                return fileRepository.findById(f.getId());
+            }
+        }
+        return null;
     }
 
-    public Iterable<File> getAllFiles (){
+    public Iterable<File> getAllFiles() {
         return fileRepository.findAll();
     }
 }

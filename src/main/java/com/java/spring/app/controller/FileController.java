@@ -28,8 +28,9 @@ public class FileController {
         return fileService.getAllFiles();
     }
 
-    @GetMapping
-    public Optional<File> getFileByID(@RequestParam Long id){
-        return fileService.getFileByID(id);
+    @GetMapping(path = "{fileName}")
+    public Optional<File> getFileByID(@PathVariable (value = "fileName") String fileName){
+        System.out.println(fileName);
+        return fileService.getFileByID(fileName);
     }
 }
