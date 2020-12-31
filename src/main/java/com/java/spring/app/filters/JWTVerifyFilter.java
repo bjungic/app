@@ -34,7 +34,7 @@ public class JWTVerifyFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authRequestHeader = request.getHeader("Authorization");
 
-        if (authRequestHeader.isEmpty() || !authRequestHeader.startsWith("Bearer ")) {
+        if (authRequestHeader == null || authRequestHeader == "" || !authRequestHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
