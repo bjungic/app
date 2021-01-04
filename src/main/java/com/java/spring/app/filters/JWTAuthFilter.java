@@ -2,7 +2,7 @@ package com.java.spring.app.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java.spring.app.jwt.TokenConfig;
-import com.java.spring.app.jwt.UsernameAndPasswordAuthRequest;
+import com.java.spring.app.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,12 +34,16 @@ public class JWTAuthFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
         try {
-            UsernameAndPasswordAuthRequest usernameAndPasswordAuthRequest =
-                    new ObjectMapper().readValue(request.getInputStream(), UsernameAndPasswordAuthRequest.class);
+            User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+//            UsernameAndPasswordAuthRequest usernameAndPasswordAuthRequest =
+//                    new ObjectMapper().readValue(request.getInputStream(), UsernameAndPasswordAuthRequest.class);
+//
+//            Authentication authentication =
+//                    new UsernamePasswordAuthenticationToken(usernameAndPasswordAuthRequest.getUsername(),
+//                            usernameAndPasswordAuthRequest.getPassword());
 
             Authentication authentication =
-                    new UsernamePasswordAuthenticationToken(usernameAndPasswordAuthRequest.getUsername(),
-                            usernameAndPasswordAuthRequest.getPassword());
+                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
             Authentication authenticate = authenticationManager.authenticate(authentication);
 
             return authenticate;

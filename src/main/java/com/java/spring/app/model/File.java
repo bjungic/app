@@ -13,6 +13,7 @@ public class File {
     private String contentType;
     @Lob
     private byte[] fileData;
+    private int size;
 
     public File() {
     }
@@ -21,6 +22,11 @@ public class File {
         this.fileName = fileName;
         this.contentType = contentType;
         this.fileData = fileData;
+        this.size = this.fileData.length;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     public String getFileName() {
@@ -53,9 +59,32 @@ public class File {
 
     @Override
     public String toString() {
+        int si = size;
+        int x = 1;
+        String name = "B";
+        while (si / 1024 > 0) {
+            si = si / 1024;
+            x++;
+        }
+        switch (x) {
+
+            case 1:
+                name = "B";
+                break;
+            case 2:
+                name = "kB";
+                break;
+            case 3:
+                name = "MB";
+                break;
+            case 4:
+                name = "GB";
+                break;
+        }
         return "{" +
                 "\"fileName\": \"" + fileName + "\"" +
                 ", \"contentType\": \"" + contentType + "\"" +
+                ", \"size\": \"" + si + " " + name + "\"" +
                 "}";
     }
 }
