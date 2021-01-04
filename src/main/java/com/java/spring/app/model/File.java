@@ -28,7 +28,7 @@ public class File {
         this.fileData = fileData;
         this.size = this.fileData.length;
         this.owner = owner;
-        this.createDate = createDate.now();
+        this.createDate = LocalDateTime.now();
     }
 
     public int getSize() {
