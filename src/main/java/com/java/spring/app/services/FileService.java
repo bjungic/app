@@ -1,6 +1,7 @@
 package com.java.spring.app.services;
 
 import com.java.spring.app.model.File;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +21,8 @@ public class FileService {
 
     public void save(MultipartFile multipartFile) throws IOException {
         String fileName = org.springframework.util.StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        File file = new File(fileName, multipartFile.getContentType(), multipartFile.getBytes());
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        File file = new File(fileName, multipartFile.getContentType(), multipartFile.getBytes(), username);
         fileRepository.save(file);
     }
 

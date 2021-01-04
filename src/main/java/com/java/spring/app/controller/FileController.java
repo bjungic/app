@@ -19,9 +19,11 @@ public class FileController {
         this.fileService = fileService;
     }
 
-    @PostMapping
-    public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        fileService.save(file);
+    @PostMapping("/upload")
+    public void uploadFile(@RequestParam("file") MultipartFile[] files) throws IOException {
+        for (MultipartFile f : files) {
+            fileService.save(f);
+        }
     }
 
     @GetMapping
@@ -29,7 +31,7 @@ public class FileController {
         return fileService.getAllFiles().toString();
     }
 
-    @GetMapping(path = "{fileName}")
+    @GetMapping("/download/{fileName}")
     public ResponseEntity<byte[]> getFileByID(@PathVariable(value = "fileName") String fileName) {
         File file = (File) fileService.getFileByID(fileName).orElse(null);
         return ResponseEntity.ok()
