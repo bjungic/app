@@ -38,7 +38,7 @@ public class UserService {
 
     public void addUser(User user) {
         if (getUser(user.getUsername()) == null) {
-//            user.setPassword(passwordConfig.passwordEncoder().encode(user.getPassword()));
+            user.setPassword(passwordConfig.passwordEncoder().encode(user.getPassword()));
             Set<Role> roles = new HashSet<>();
             for (Role r : user.getRoles()) {
                 if (roleService.getRoleByName(r.getName().toUpperCase()) != null)
