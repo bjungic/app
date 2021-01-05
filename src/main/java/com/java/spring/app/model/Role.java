@@ -1,6 +1,4 @@
-package com.java.spring.app.security;
-
-import com.java.spring.app.model.User;
+package com.java.spring.app.model;
 
 import javax.persistence.*;
 import java.util.List;

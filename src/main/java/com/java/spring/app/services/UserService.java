@@ -3,7 +3,7 @@ package com.java.spring.app.services;
 import com.java.spring.app.model.Device;
 import com.java.spring.app.model.User;
 import com.java.spring.app.security.PasswordConfig;
-import com.java.spring.app.security.Role;
+import com.java.spring.app.model.Role;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -40,11 +40,19 @@ public class UserService {
         if (getUser(user.getUsername()) == null) {
             user.setPassword(passwordConfig.passwordEncoder().encode(user.getPassword()));
             Set<Role> roles = new HashSet<>();
+            if (user.getRoles().isEmpty()) {
+                System.out.println("Empty ROLE. Set it to \"USER\"");
+                if ((roleService.getRoleByName("USER") != null)) {
+                    roles.add(roleService.getRoleByName("USER"));
+                } else {
+                    roles.add(new Role("USER"));
+                }
+            }
             for (Role r : user.getRoles()) {
                 if (roleService.getRoleByName(r.getName().toUpperCase()) != null)
                     roles.add(roleService.getRoleByName(r.getName().toUpperCase()));
                 else {
-                    if (roles.isEmpty()) {
+                    if (roles == null || roles.isEmpty()) {
                         System.out.println("Unknown ROLE: " + r.getName() + ". Set it to \"USER\"");
                         if ((roleService.getRoleByName("USER") != null)) {
                             roles.add(roleService.getRoleByName("USER"));
@@ -58,6 +66,14 @@ public class UserService {
             userRepository.save(user);
         }
         System.out.println("Dodan user: " + user.getUsername());
+    }
+
+    private void setUserRole(Set<Role> roles) {
+        if ((roleService.getRoleByName("USER") != null)) {
+            roles.add(roleService.getRoleByName("USER"));
+        } else {
+            roles.add(new Role("USER"));
+        }
     }
 
     public void deleteUser(Long id) {

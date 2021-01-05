@@ -1,6 +1,6 @@
 package com.java.spring.app.services;
 
-import com.java.spring.app.security.Role;
+import com.java.spring.app.model.Role;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;

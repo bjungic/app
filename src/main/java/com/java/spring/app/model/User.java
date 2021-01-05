@@ -1,7 +1,5 @@
 package com.java.spring.app.model;
 
-import com.java.spring.app.security.Role;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -18,7 +16,7 @@ public class User {
     String username;
     String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role"))
     Set<Role> roles = new HashSet<>();
 
@@ -81,17 +79,6 @@ public class User {
     public void removeAllDevices() {
         devices.removeAll(getDevices());
     }
-
-//    @Override
-//    public String toString() {
-//        return "{" +
-//                "\"username\": \"" + username + "\"" +
-//                ", \"password\": \"" + password + "\"" +
-//                ", \"roles\": " + roles +
-//                ", \"devices\": " + devices + "" +
-//                "}";
-//    }
-
 
     @Override
     public boolean equals(Object o) {
