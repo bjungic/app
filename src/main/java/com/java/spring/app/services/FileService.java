@@ -21,8 +21,7 @@ public class FileService {
 
     public void save(MultipartFile multipartFile) throws IOException {
         String fileName = org.springframework.util.StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        File file = new File(fileName, multipartFile.getContentType(), multipartFile.getBytes(), username);
+        File file = new File(fileName, multipartFile.getContentType(), multipartFile.getBytes(), getUsername());
         fileRepository.save(file);
     }
 
@@ -31,7 +30,7 @@ public class FileService {
         Iterator iter = result.iterator();
         while (iter.hasNext()) {
             File f = (File) iter.next();
-            if (f.getFileName().equals(fileName)) {
+            if (f.getFileName().equals(fileName) && f.getOwner().equals(getUsername())) {
                 return fileRepository.findById(f.getId());
             }
         }
@@ -40,5 +39,10 @@ public class FileService {
 
     public Iterable<File> getAllFiles() {
         return fileRepository.findAll();
+    }
+
+    private String getUsername() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return username;
     }
 }

@@ -33,9 +33,14 @@ public class FileController {
 
     @GetMapping("/download/{fileName}")
     public ResponseEntity<byte[]> getFileByID(@PathVariable(value = "fileName") String fileName) {
-        File file = (File) fileService.getFileByID(fileName).orElse(null);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
-                .body(file.getFileData());
+        try {
+            File file = fileService.getFileByID(fileName).orElse(null);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
+                    .body(file.getFileData());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }
