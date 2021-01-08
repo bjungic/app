@@ -38,11 +38,31 @@ public class FileService {
     }
 
     public Iterable<File> getAllFiles() {
-        return fileRepository.findAll();
+        Iterable<File> result = fileRepository.findAll();
+        Iterator iter = result.iterator();
+        while (iter.hasNext()) {
+            File f = (File) iter.next();
+            if (!f.getOwner().equals(getUsername())) {
+                iter.remove();
+            }
+        }
+        return result;
     }
 
     private String getUsername() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return username;
+    }
+
+    public void deleteFile(String fileName) {
+        Iterable<File> result = fileRepository.findAll();
+        Iterator iter = result.iterator();
+        while (iter.hasNext()) {
+            File f = (File) iter.next();
+            if (f.getFileName().equals(fileName) && f.getOwner().equals(getUsername())) {
+                System.out.println(f.getOwner() + "           " + getUsername());
+                fileRepository.deleteById(f.getId());
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-@RequestMapping("file")
+@RequestMapping(value = "files", produces = "application/json")
 @RestController
 public class FileController {
 
@@ -42,5 +42,10 @@ public class FileController {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    @DeleteMapping("/delete/{filename}")
+    public void deleteFile(@PathVariable(value = "filename") String filename){
+        fileService.deleteFile(filename);
     }
 }

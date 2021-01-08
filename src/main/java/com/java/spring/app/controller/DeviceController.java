@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 
-@RequestMapping("d")
+@RequestMapping(value = "d", produces = "application/json")
 @RestController
 public class DeviceController {
 

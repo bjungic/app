@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
-@RequestMapping("u")
+@RequestMapping(value = "u", produces = "application/json")
 @RestController
 public class UserController {
 
