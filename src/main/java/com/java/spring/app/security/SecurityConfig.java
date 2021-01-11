@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JWTAuthFilter(authenticationManager(), tokenConfig))
                 .addFilterAfter(new JWTVerifyFilter(tokenConfig), JWTAuthFilter.class)
                 .authorizeRequests()
-                .antMatchers("/", "login").permitAll()
+                .antMatchers("/", "login", "/api-docs").permitAll()
                 .antMatchers("/d").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/**").hasAuthority("ADMIN")
                 .anyRequest()
