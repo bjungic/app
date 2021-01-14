@@ -4,6 +4,7 @@ import com.java.spring.app.model.Device;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class DeviceNativeService {
@@ -19,5 +20,8 @@ public class DeviceNativeService {
         deviceNativeRepository.addDevice(device.getLast_time(), device.getModel(), device.getUuid());
     }
 
+    public List<Device> getAllDevices(){
+        return deviceNativeRepository.getAllDevices();
+    }
 
 }
