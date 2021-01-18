@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
 public class DeviceNativeRepositoryService {
@@ -20,5 +21,10 @@ public class DeviceNativeRepositoryService {
                 .setParameter(2, device.getModel())
                 .setParameter(3, device.getUuid())
                 .executeUpdate();
+    }
+
+    public List<Device> getAllDevices() {
+        return entityManager.createNativeQuery("select * from devices", Device.class)
+                .getResultList();
     }
 }

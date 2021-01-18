@@ -6,7 +6,6 @@ import com.java.spring.app.services.DeviceNativeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @RequestMapping(value = "nativeDevice", produces = "application/json")
 @RestController
@@ -21,8 +20,9 @@ public class DeviceNativeController {
     }
 
     @GetMapping
-    public List<Device> getDevices() {
-        return deviceNativeService.getAllDevices();
+    public String getDevices() {
+//        return deviceNativeService.getAllDevices().toString();
+        return deviceNativeRepositoryService.getAllDevices().toString();
     }
 
     @PostMapping

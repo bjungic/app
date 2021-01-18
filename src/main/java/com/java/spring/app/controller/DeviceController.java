@@ -22,8 +22,8 @@ public class DeviceController {
         return deviceService.getAllDevices().toString();
     }
 
-    @GetMapping(path = "{id}")
-    private String getDevice(@PathVariable(name = "id") UUID uuid) {
+    @GetMapping(path = "{uuid}")
+    private String getDevice(@PathVariable(name = "uuid") UUID uuid) {
         return deviceService.getDevice(uuid).toString();
     }
 
@@ -37,13 +37,13 @@ public class DeviceController {
         deviceService.updateDevice(device);
     }
 
-    @PutMapping(path = "{id}")
-    private void updateDeviceUser(@RequestBody Device device, @PathVariable(name = "id") String username) {
+    @PutMapping(path = "{username}")
+    private void updateDeviceUser(@RequestBody Device device, @PathVariable(name = "username") String username) {
         deviceService.updateDeviceUser(device, username);
     }
 
-    @DeleteMapping(path = "{id}")
-    private void deleteDeviceById(@PathVariable("id") UUID uuid) {
+    @DeleteMapping(path = "{uuid}")
+    private void deleteDeviceById(@PathVariable("uuid") UUID uuid) {
         deviceService.deleteDeviceByUUID(uuid);
     }
 

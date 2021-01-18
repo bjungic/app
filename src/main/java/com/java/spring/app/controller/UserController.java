@@ -23,13 +23,13 @@ public class UserController {
         return userService.getAllUsers().toString();
     }
 
-    @GetMapping(path = "{id}")
-    private String getUserByUsername(@PathVariable(value = "id") String username) {
+    @GetMapping(path = "{username}")
+    private String getUserByUsername(@PathVariable(value = "username") String username) {
         return userService.getUser(username).toString();
     }
 
-    @PostMapping(path = "{id}")
-    private void setUserFromDevice(@RequestBody User user, @PathVariable("id") UUID uuid) {
+    @PostMapping(path = "{uuid}")
+    private void setUserFromDevice(@RequestBody User user, @PathVariable("uuid") UUID uuid) {
         try {
             userService.addUserFromDevice(user, uuid);
 
@@ -52,13 +52,13 @@ public class UserController {
         userService.updateUser(user);
     }
 
-    @PutMapping(path = "{id}")
-    private void updateUserDevice(@RequestBody User user, @PathVariable("id") UUID uuid) {
+    @PutMapping(path = "{uuid}")
+    private void updateUserDevice(@RequestBody User user, @PathVariable("uuid") UUID uuid) {
         userService.updateUserDevice(user, uuid);
     }
 
-    @DeleteMapping(path = "{id}")
-    private void deleteUserById(@PathVariable("id") String username) {
+    @DeleteMapping(path = "{username}")
+    private void deleteUserById(@PathVariable("username") String username) {
         userService.deleteUserByUsername(username);
     }
 
