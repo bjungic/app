@@ -21,10 +21,13 @@ public class DeviceNativeRepositoryService {
                 .setParameter(2, device.getModel())
                 .setParameter(3, device.getUuid())
                 .executeUpdate();
+        entityManager.close();
     }
 
     public List<Device> getAllDevices() {
-        return entityManager.createNativeQuery("select * from devices", Device.class)
+        List list = entityManager.createNativeQuery("select * from devices", Device.class)
                 .getResultList();
+        entityManager.close();
+        return list;
     }
 }
