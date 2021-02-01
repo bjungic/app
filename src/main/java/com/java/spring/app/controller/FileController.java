@@ -3,6 +3,7 @@ package com.java.spring.app.controller;
 import com.java.spring.app.model.File;
 import com.java.spring.app.services.FileService;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +20,7 @@ public class FileController {
         this.fileService = fileService;
     }
 
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public void uploadFile(@RequestParam("file") MultipartFile[] files) throws IOException {
         for (MultipartFile f : files) {
             fileService.save(f);

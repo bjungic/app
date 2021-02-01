@@ -11,9 +11,9 @@ import java.util.Set;
 
 public class UserDetailsImplementation implements UserDetails {
 
-    private Set<GrantedAuthority> authorities = new HashSet<>();
-    private String password;
-    private String username;
+    private final Set<GrantedAuthority> authorities = new HashSet<>();
+    private final String password;
+    private final String username;
 
     public UserDetailsImplementation(User user) {
         this.username = user.getUsername();
@@ -25,9 +25,9 @@ public class UserDetailsImplementation implements UserDetails {
             SimpleGrantedAuthority auth = new SimpleGrantedAuthority(((Role) iter.next()).getName());
             this.authorities.add(auth);
         }
-        System.out.println(username);
-        System.out.println(password);
-        System.out.println(authorities);
+//        System.out.println(username);
+//        System.out.println(password);
+//        System.out.println(authorities);
     }
 
     @Override

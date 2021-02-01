@@ -19,6 +19,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity(debug = false)
+
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
@@ -53,14 +54,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JWTAuthFilter(authenticationManager(), tokenConfig))
                 .addFilterAfter(new JWTVerifyFilter(tokenConfig), JWTAuthFilter.class)
                 .authorizeRequests()
-                .antMatchers("/", "login", "/logout", "/api-docs/**", "/swagger-ui/**").permitAll()
-                .antMatchers("/d").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers("/**").hasAuthority("ADMIN")
+                .antMatchers("/", "login", "/logout", "/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
+                .antMatchers("/d").hasAnyAuthority("USER")
+                .antMatchers("/**").hasAnyAuthority("ADMIN")
                 .anyRequest()
                 .fullyAuthenticated()
                 .and()
                 .addFilterAfter(new IPFilter(), SecurityContextPersistenceFilter.class)
-                .httpBasic()
+//                .httpBasic()
         ;
     }
 }
