@@ -2,6 +2,8 @@ package com.java.spring.app.controller;
 
 import com.java.spring.app.model.File;
 import com.java.spring.app.services.FileService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,8 @@ import java.io.IOException;
 @RequestMapping(value = "files", produces = "application/json")
 @RestController
 public class FileController {
+
+    Logger logger = LoggerFactory.getLogger(FileController.class);
 
     private final FileService fileService;
 
@@ -40,13 +44,14 @@ public class FileController {
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
                     .body(file.getFileData());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.warn("File ne postoji. " + e.getMessage(), e);
+//            System.out.println(e.getMessage());
         }
         return null;
     }
 
     @DeleteMapping("/delete/{filename}")
-    public void deleteFile(@PathVariable(value = "filename") String filename){
+    public void deleteFile(@PathVariable(value = "filename") String filename) {
         fileService.deleteFile(filename);
     }
 }

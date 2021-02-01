@@ -2,6 +2,8 @@ package com.java.spring.app.controller;
 
 import com.java.spring.app.model.User;
 import com.java.spring.app.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,8 @@ import java.util.UUID;
 @RestController
 public class UserController {
 
+    Logger logger = LoggerFactory.getLogger(UserController.class);
+
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -19,7 +23,8 @@ public class UserController {
 
     @GetMapping
     private String getUsers(HttpServletRequest httpRequest) {
-        System.out.println(java.time.LocalDateTime.now() + "     IP: " + httpRequest.getRemoteAddr());
+        logger.info(java.time.LocalDateTime.now() + "     IP: " + httpRequest.getRemoteAddr());
+//        System.out.println(java.time.LocalDateTime.now() + "     IP: " + httpRequest.getRemoteAddr());
         return userService.getAllUsers().toString();
     }
 
@@ -34,7 +39,8 @@ public class UserController {
             userService.addUserFromDevice(user, uuid);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(String.valueOf(e.getStackTrace()));
+//            System.out.println(e.getMessage());
         }
     }
 
@@ -43,7 +49,8 @@ public class UserController {
         try {
             userService.addUser(user);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.warn(e.getMessage(), e);
+//            System.out.println(e.getMessage());
         }
     }
 

@@ -1,15 +1,19 @@
 package com.java.spring.app.services;
 
 import com.java.spring.app.model.Device;
+import com.java.spring.app.model.Role;
 import com.java.spring.app.model.User;
 import com.java.spring.app.security.PasswordConfig;
-import com.java.spring.app.model.Role;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class UserService {
+
+    Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private final PasswordConfig passwordConfig;
 
@@ -41,7 +45,8 @@ public class UserService {
             user.setPassword(passwordConfig.passwordEncoder().encode(user.getPassword()));
             Set<Role> roles = new HashSet<>();
             if (user.getRoles().isEmpty()) {
-                System.out.println("Empty ROLE. Set it to \"USER\"");
+                logger.info("Empty ROLE. Set it to \"USER\"");
+//                System.out.println("Empty ROLE. Set it to \"USER\"");
                 if ((roleService.getRoleByName("USER") != null)) {
                     roles.add(roleService.getRoleByName("USER"));
                 } else {
@@ -53,7 +58,8 @@ public class UserService {
                     roles.add(roleService.getRoleByName(r.getName().toUpperCase()));
                 else {
                     if (roles == null || roles.isEmpty()) {
-                        System.out.println("Unknown ROLE: " + r.getName() + ". Set it to \"USER\"");
+                        logger.info("Unknown ROLE: " + r.getName() + ". Set it to \"USER\"");
+//                        System.out.println("Unknown ROLE: " + r.getName() + ". Set it to \"USER\"");
                         if ((roleService.getRoleByName("USER") != null)) {
                             roles.add(roleService.getRoleByName("USER"));
                         } else {
@@ -65,7 +71,8 @@ public class UserService {
             user.setRoles(roles);
             userRepository.save(user);
         }
-        System.out.println("Dodan user: " + user.getUsername());
+        logger.info("Dodan user: " + user.getUsername());
+//        System.out.println("Dodan user: " + user.getUsername());
     }
 
     private void setUserRole(Set<Role> roles) {
@@ -89,7 +96,8 @@ public class UserService {
                 return u;
             }
         }
-        System.out.println(java.time.LocalDateTime.now() + "   Ne postoji user: " + username);
+        logger.info("Ne postoji user: " + username);
+//        System.out.println(java.time.LocalDateTime.now() + "   Ne postoji user: " + username);
         return null;
     }
 
