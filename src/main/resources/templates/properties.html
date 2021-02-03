@@ -5,7 +5,12 @@
     <title>Naslov</title>
 </head>
 <body>
-<textarea data-th-text="${properties}" rows="50" style="width:60%; height:100%;">Primjer properties texta.</textarea>
+<form action="#" data-th-action="@{/saveproperties}" method="post">
+    <textarea name="prop" data-th-text="${properties}" rows="50" style="width:60%;">
+        Primjer properties texta.
+    </textarea>
+    <button name="submit" type="submit" value="0">Submit</button>
+</form>
 </body>
 </html>
 
