@@ -37,6 +37,7 @@ public class PropertiesController {
     public String saveProperties(@RequestParam String prop, Model model) throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
         String properties = String.valueOf(classLoader.getResource("application.properties"));
+        logger.error(properties.substring(6));
         FileOutputStream outputStream = new FileOutputStream(properties.substring(6));
         byte[] strToBytes = prop.getBytes();
         outputStream.write(strToBytes);
