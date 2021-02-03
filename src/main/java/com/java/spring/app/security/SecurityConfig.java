@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JWTAuthFilter(authenticationManager(), tokenConfig))
                 .addFilterAfter(new JWTVerifyFilter(tokenConfig), JWTAuthFilter.class)
                 .authorizeRequests()
-                .antMatchers("/", "login", "/logout", "/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
+                .antMatchers("/", "/prop", "login", "/logout", "/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .antMatchers("/d").hasAnyAuthority("USER")
                 .antMatchers("/**").hasAnyAuthority("ADMIN")
                 .anyRequest()
