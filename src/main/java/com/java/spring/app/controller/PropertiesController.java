@@ -4,21 +4,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 @Controller
 public class PropertiesController {
 
     Logger logger = LoggerFactory.getLogger(PropertiesController.class);
 
-    @RequestMapping(value = "/prop")
+    @RequestMapping(value = "/properties")
     public String properties(Model model) throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
+        classLoader.getResource("application.properties");
         InputStream inputStream = classLoader.getResourceAsStream("application.properties");
         StringBuilder resultStringBuilder = new StringBuilder();
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
@@ -31,5 +31,16 @@ public class PropertiesController {
         }
         model.addAttribute("properties", resultStringBuilder.toString());
         return "properties";
+    }
+
+    @PostMapping("/saveproperties")
+    public String saveProperties(@RequestParam String prop, Model model) throws IOException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        String properties = String.valueOf(classLoader.getResource("application.properties"));
+        FileOutputStream outputStream = new FileOutputStream(properties.substring(6));
+        byte[] strToBytes = prop.getBytes();
+        outputStream.write(strToBytes);
+        outputStream.close();
+        return "redirect:/properties";
     }
 }
