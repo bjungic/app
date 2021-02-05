@@ -37,16 +37,17 @@ public class PropertiesController {
     public String saveProperties(@RequestParam String prop, Model model) {
         ClassLoader classLoader = getClass().getClassLoader();
         String properties = String.valueOf(classLoader.getResource("application.properties"));
-        logger.error(properties);
+        properties = properties.replace("file:", "");
+        properties = properties.replace("jar:", "");
         FileOutputStream outputStream = null;
-//        try {
-//            outputStream = new FileOutputStream(properties.substring(6));
-//            byte[] strToBytes = prop.getBytes();
-//            outputStream.write(strToBytes);
-//            outputStream.close();
-//        } catch (Exception e) {
-//            logger.error(e.getMessage(), e);
-//        }
+        try {
+            outputStream = new FileOutputStream(properties);
+            byte[] strToBytes = prop.getBytes();
+            outputStream.write(strToBytes);
+            outputStream.close();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
         return "redirect:/properties";
     }
 }
