@@ -34,14 +34,19 @@ public class PropertiesController {
     }
 
     @PostMapping("/saveproperties")
-    public String saveProperties(@RequestParam String prop, Model model) throws IOException {
+    public String saveProperties(@RequestParam String prop, Model model) {
         ClassLoader classLoader = getClass().getClassLoader();
         String properties = String.valueOf(classLoader.getResource("application.properties"));
-        logger.error(properties.substring(6));
-        FileOutputStream outputStream = new FileOutputStream(properties.substring(6));
-        byte[] strToBytes = prop.getBytes();
-        outputStream.write(strToBytes);
-        outputStream.close();
+        logger.error(properties);
+        FileOutputStream outputStream = null;
+//        try {
+//            outputStream = new FileOutputStream(properties.substring(6));
+//            byte[] strToBytes = prop.getBytes();
+//            outputStream.write(strToBytes);
+//            outputStream.close();
+//        } catch (Exception e) {
+//            logger.error(e.getMessage(), e);
+//        }
         return "redirect:/properties";
     }
 }
