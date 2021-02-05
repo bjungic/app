@@ -39,9 +39,11 @@ public class PropertiesController {
         String properties = String.valueOf(classLoader.getResource("application.properties"));
         properties = properties.replace("file:", "");
         properties = properties.replace("jar:", "");
+        logger.error(properties);
+
         FileOutputStream outputStream = null;
         try {
-            outputStream = new FileOutputStream(properties);
+            outputStream = new FileOutputStream("./app.prop");
             byte[] strToBytes = prop.getBytes();
             outputStream.write(strToBytes);
             outputStream.close();
